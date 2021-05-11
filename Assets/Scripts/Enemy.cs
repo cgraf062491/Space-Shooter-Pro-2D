@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
     private Animator anim;
     private AudioSource audio;
 
+    private bool _canShoot = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,6 +65,7 @@ public class Enemy : MonoBehaviour
     		}
 
     		_speed = 0f;
+            _canShoot = false;
     		anim.SetTrigger("OnEnemyDeath");
             audio.PlayOneShot(_explosion_clip);
             Destroy(GetComponent<Collider2D>());
@@ -77,6 +80,7 @@ public class Enemy : MonoBehaviour
             }
             
             _speed = 0f;
+            _canShoot = false;
             anim.SetTrigger("OnEnemyDeath");
             audio.PlayOneShot(_explosion_clip);
             Destroy(GetComponent<Collider2D>());
@@ -86,7 +90,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator ShootLaser()
     {
-    	while(true)
+    	while(_canShoot == true)
     	{
     		float laser_delay = Random.Range(3.0f, 5.0f);
     		yield return new WaitForSeconds(laser_delay);

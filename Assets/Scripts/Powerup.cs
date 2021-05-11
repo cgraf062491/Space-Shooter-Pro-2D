@@ -40,6 +40,9 @@ public class Powerup : MonoBehaviour
                     case 3:
                         player.AmmoRefill();
                         break;
+                    case 4:
+                        player.HealthUp();
+                        break;
     			}
     		}
     		Destroy(this.gameObject);

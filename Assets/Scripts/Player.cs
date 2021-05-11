@@ -227,4 +227,21 @@ public class Player : MonoBehaviour
 		_audio.PlayOneShot(_powerup_clip);
 		_uiManager.UpdateAmmo(_ammoCount);
 	}
+
+	public void HealthUp()
+	{
+		_audio.PlayOneShot(_powerup_clip);
+		if(_lives == 1)
+		{
+			_lives += 1;
+			_playerEngines[1].SetActive(false);
+			_uiManager.UpdateLives(_lives);
+		}
+		else if(_lives == 2)
+		{
+			_lives += 1;
+			_playerEngines[0].SetActive(false);
+			_uiManager.UpdateLives(_lives);
+		}
+	}
 }

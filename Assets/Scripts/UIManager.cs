@@ -39,12 +39,15 @@ public class UIManager : MonoBehaviour
 
     public void UpdateAmmo(int currentAmmo)
     {
-        _ammoText.text = "Ammo: " + currentAmmo;
-
         if(currentAmmo <= 0)
         {
             _ammoText.text = "Ammo: " + 0;
             _ammoText.color = Color.red;
+        }
+        else
+        {
+            _ammoText.text = "Ammo: " + currentAmmo;
+            _ammoText.color = Color.white;
         }
     }
 
