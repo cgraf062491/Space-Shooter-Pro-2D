@@ -220,4 +220,11 @@ public class Player : MonoBehaviour
 		_score += 10;
 		_uiManager.UpdateScore(_score);
 	}
+
+	public void AmmoRefill()
+	{
+		_ammoCount = 15;
+		_audio.PlayOneShot(_powerup_clip);
+		_uiManager.UpdateAmmo(_ammoCount);
+	}
 }
