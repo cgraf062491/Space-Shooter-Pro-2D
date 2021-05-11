@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
 
 	private bool _tripleShot = false;
 	private bool _shieldActive = false;
+	private bool _speedActive = false;
 
 	private float _canFire = -1f;
 	private SpawnManager _spawnManager;
@@ -70,6 +71,16 @@ public class Player : MonoBehaviour
 		{
 			Laser();
 		}
+
+		if(Input.GetKey(KeyCode.LeftShift) && _speedActive == false)
+		{
+			_speed = 7.0f;
+		}
+		else if(Input.GetKeyUp(KeyCode.LeftShift) && _speedActive == false)
+		{
+			_speed = 5.0f;
+		}
+
 	}
 
 	void Movement()
@@ -162,6 +173,7 @@ public class Player : MonoBehaviour
 	public void SpeedActivate()
 	{
 		_speed = 8.5f;
+		_speedActive = true;
 		_audio.PlayOneShot(_powerup_clip);
 		StartCoroutine(SpeedDeactivate());
 	}
@@ -169,6 +181,7 @@ public class Player : MonoBehaviour
 	IEnumerator SpeedDeactivate()
 	{
 		yield return new WaitForSeconds(5.0f);
+		_speedActive = false;
 		_speed = 5.0f;
 	}
 
