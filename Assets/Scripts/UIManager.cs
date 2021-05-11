@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
 	[SerializeField] private Text _scoreText;
 	[SerializeField] private Text _gameOverText;
 	[SerializeField] private Text _restartText;
+    [SerializeField] private Text _ammoText;
 	[SerializeField] private Sprite[] _livesSprites;
 	[SerializeField] private Image _livesImage;
 
@@ -17,6 +18,7 @@ public class UIManager : MonoBehaviour
     {
     	//_livesSprites
         _scoreText.text = "Score: " + 0;
+        _ammoText.text = "Ammo: " + 15;
     }
 
     public void UpdateScore(int newScore)
@@ -33,6 +35,17 @@ public class UIManager : MonoBehaviour
     		_restartText.enabled = true;
     		StartCoroutine(GameOverFlicker());
     	}
+    }
+
+    public void UpdateAmmo(int currentAmmo)
+    {
+        _ammoText.text = "Ammo: " + currentAmmo;
+
+        if(currentAmmo <= 0)
+        {
+            _ammoText.text = "Ammo: " + 0;
+            _ammoText.color = Color.red;
+        }
     }
 
     IEnumerator GameOverFlicker()
