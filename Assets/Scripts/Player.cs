@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 	[SerializeField] private float _fireRate = 0.15f;
 	[SerializeField] private GameObject _laser;
 	[SerializeField] private GameObject _tripleLaser;
+	[SerializeField] private GameObject _crossLaser;
 	[SerializeField] private GameObject _playerShield;
 	[SerializeField] private GameObject _playerThrusters;
 	[SerializeField] private GameObject[] _playerEngines;
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour
 	private bool _tripleShot = false;
 	private bool _shieldActive = false;
 	private bool _speedActive = false;
+	private bool _crossShot = false;
 
 	private int _shieldLevel = 3;
 	private int _ammoCount = 15;
@@ -128,6 +130,10 @@ public class Player : MonoBehaviour
 			{
 				Instantiate(_tripleLaser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
 			}
+			else if(_crossShot == true)
+			{
+				Instantiate(_crossLaser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
+			}
 			else
 			{
 				Instantiate(_laser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
@@ -190,6 +196,19 @@ public class Player : MonoBehaviour
 	{
 		yield return new WaitForSeconds(5.0f);
 		_tripleShot = false;
+	}
+
+	public void CrossShotActivate()
+	{
+		_crossShot = true;
+		_audio.PlayOneShot(_powerup_clip);
+		StartCoroutine(CrossShotDeactivate());
+	}
+
+	IEnumerator CrossShotDeactivate()
+	{
+		yield return new WaitForSeconds(5.0f);
+		_crossShot = false;
 	}
 
 	public void SpeedActivate()

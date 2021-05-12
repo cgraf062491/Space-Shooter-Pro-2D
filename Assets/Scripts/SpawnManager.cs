@@ -39,6 +39,13 @@ public class SpawnManager : MonoBehaviour
             int spawnType = Random.Range(0, 5);
 
             Instantiate(powerups[spawnType], new Vector3(x_pos, 7.0f, 0), Quaternion.identity);
+
+            int crossSpawn = Random.Range(1, 11);
+            if(crossSpawn == 10)
+            {
+                x_pos = Random.Range(-9.5f, 9.5f);
+                Instantiate(powerups[5], new Vector3(x_pos, 7.0f, 0), Quaternion.identity);
+            }
             yield return new WaitForSeconds(spawnTime);
         }
     }
