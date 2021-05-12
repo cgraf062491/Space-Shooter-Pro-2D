@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
 	private bool _tripleShot = false;
 	private bool _shieldActive = false;
 	private bool _speedActive = false;
+	private bool _canThruster = true;
 	private bool _crossShot = false;
 
 	private int _shieldLevel = 3;
@@ -73,14 +74,24 @@ public class Player : MonoBehaviour
 		// Run all movement code
 		Movement();
 
-		if(Input.GetKey(KeyCode.LeftShift) && _speedActive == false)
+		if(Input.GetKey(KeyCode.LeftShift) && _canThruster == true && _speedActive == false)
 		{
 			_speed = 7.0f;
+			_playerThrusters.SetActive(true);
+		}
+		else if(Input.GetKey(KeyCode.LeftShift) && _canThruster == true && _speedActive == true)
+		{
+			_speed = 10.0f;
 			_playerThrusters.SetActive(true);
 		}
 		else if(Input.GetKeyUp(KeyCode.LeftShift) && _speedActive == false)
 		{
 			_speed = 5.0f;
+			_playerThrusters.SetActive(false);
+		}
+		else if(Input.GetKeyUp(KeyCode.LeftShift) && _speedActive == true)
+		{
+			_speed = 8.0f;
 			_playerThrusters.SetActive(false);
 		}
 
@@ -213,7 +224,7 @@ public class Player : MonoBehaviour
 
 	public void SpeedActivate()
 	{
-		_speed = 8.5f;
+		_speed = 8.0f;
 		_speedActive = true;
 		_audio.PlayOneShot(_powerup_clip);
 		StartCoroutine(SpeedDeactivate());
@@ -235,6 +246,17 @@ public class Player : MonoBehaviour
 		_playerShield.SetActive(true);
 	}
 
+	public void ThrusterApproved()
+	{
+		_canThruster = true;
+	}
+
+	public void ThrusterDown()
+	{
+		_canThruster = false;
+		_playerThrusters.SetActive(false);
+	}
+
 	public void AmmoRefill()
 	{
 		_ammoCount = 15;
@@ -243,17 +265,22 @@ public class Player : MonoBehaviour
 
 	public void HealthRefill()
 	{
-		_lives += 1;
-
-		if(_lives == 2)
+		if(_lives == 3)
 		{
+			return;
+		}
+		else if(_lives == 1)
+		{
+			_lives += 1;
 			_playerEngines[1].SetActive(false);
+			_uiManager.UpdateLives(_lives);
 		}
-		else if(_lives == 3)
+		else if(_lives == 2)
 		{
+			_lives += 1;
 			_playerEngines[0].SetActive(false);
+			_uiManager.UpdateLives(_lives);
 		}
-		_uiManager.UpdateLives(_lives);
 	}
 
 	public void EnemyDestroyed()

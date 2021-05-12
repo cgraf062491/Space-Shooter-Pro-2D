@@ -11,14 +11,48 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text _ammoText;
 	[SerializeField] private Sprite[] _livesSprites;
 	[SerializeField] private Image _livesImage;
+    [SerializeField] private Image _thrusterImage;
+
+    private float _thrusterCooldown = 10.0f;
+    private bool _canThruster = true;
+    private Player player;
 
 
     // Start is called before the first frame update
     void Start()
     {
-    	//_livesSprites
+        player = GameObject.Find("Player").GetComponent<Player>();
+        if(player == null)
+        {
+            Debug.LogError("Player was NULL");
+        }
         _scoreText.text = "Score: " + 0;
         _ammoText.text = "Ammo: " + 15;
+        _thrusterImage.fillAmount = 0.0f;
+    }
+
+    void Update()
+    {
+        if(Input.GetKey(KeyCode.LeftShift) && _canThruster == true)
+        {
+            _thrusterImage.fillAmount += 1.0f / 3.0f * Time.deltaTime;
+        }
+        else
+        {
+            _thrusterImage.fillAmount -= 1.0f / 10.0f * Time.deltaTime;
+        }
+
+        if(_thrusterImage.fillAmount == 1.0f && _canThruster == true)
+        {
+            _canThruster = false;
+            player.ThrusterDown();
+        }
+
+        if(_thrusterImage.fillAmount < 0.5f && _canThruster == false)
+        {
+            _canThruster = true;
+            player.ThrusterApproved();
+        }
     }
 
     public void UpdateScore(int newScore)
