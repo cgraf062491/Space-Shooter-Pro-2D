@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
             Debug.LogError("Player was NULL");
         }
         _scoreText.text = "Score: " + 0;
-        _ammoText.text = "Ammo: " + 15;
+        _ammoText.text = "Ammo: " + 15 + "/15";
         _thrusterImage.fillAmount = 0.0f;
     }
 
@@ -75,12 +75,12 @@ public class UIManager : MonoBehaviour
     {
         if(currentAmmo <= 0)
         {
-            _ammoText.text = "Ammo: " + 0;
+            _ammoText.text = "Ammo: " + 0 + "/15";
             _ammoText.color = Color.red;
         }
         else
         {
-            _ammoText.text = "Ammo: " + currentAmmo;
+            _ammoText.text = "Ammo: " + currentAmmo + "/15";
             _ammoText.color = Color.white;
         }
     }
