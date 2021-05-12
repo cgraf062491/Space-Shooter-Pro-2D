@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 	//optional value for each declared variable
 	[SerializeField] private int _lives = 3;
 	[SerializeField] private int _score = 0;
+
 	[SerializeField] private float _speed = 5.0f;
 	[SerializeField] private float _fireRate = 0.15f;
 	[SerializeField] private GameObject _laser;
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour
 	private bool _speedActive = false;
 
 	private int _shieldLevel = 3;
+	private int _ammoCount = 15;
 	private float _canFire = -1f;
 	private SpawnManager _spawnManager;
 	private UIManager _uiManager;
@@ -116,19 +118,24 @@ public class Player : MonoBehaviour
 
 	void Laser()
 	{
-		_canFire = Time.time + _fireRate;
-		
-		if(_tripleShot == true)
+		if(_ammoCount > 0)
 		{
-			Instantiate(_tripleLaser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
-		}
-		else
-		{
-			Instantiate(_laser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
-		}
+			_ammoCount -= 1;
+			_uiManager.UpdateAmmo(_ammoCount);
+			_canFire = Time.time + _fireRate;
+			
+			if(_tripleShot == true)
+			{
+				Instantiate(_tripleLaser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
+			}
+			else
+			{
+				Instantiate(_laser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
+			}
 
-		//player audio clip	
-		_audio.PlayOneShot(_laser_clip);		
+			//player audio clip	
+			_audio.PlayOneShot(_laser_clip);
+		}	
 	}
 
 	public void Damage()
