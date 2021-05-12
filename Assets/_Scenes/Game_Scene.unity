@@ -1399,6 +1399,7 @@ MonoBehaviour:
   - {fileID: 1988663672}
   _laser_clip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _powerup_clip: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
+  _negative_clip: {fileID: 8300000, guid: dc6614beca09347ec9b258f12d154bdd, type: 3}
 --- !u!212 &993445300
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1654,7 +1655,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1613121277
 GameObject:
@@ -2286,6 +2287,7 @@ MonoBehaviour:
   - {fileID: 7635837203617600462, guid: 2526bc7884b3248628436691d885d3e5, type: 3}
   - {fileID: 6191001870754651503, guid: d4569df73d94b448ca6c5577afcc2964, type: 3}
   - {fileID: 8419874441026829986, guid: bb8b01ce015204f3f81ddea644987681, type: 3}
+  - {fileID: 2637461963135257850, guid: a899e6ceb5c294f1a8a81ed196fb6bd0, type: 3}
   - {fileID: 2155756761750038297, guid: 869e6b93708ee4cc5acaac3aa135327c, type: 3}
   _enemyContainer: {fileID: 1819420388}
 --- !u!4 &2011560724
@@ -2391,7 +2393,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2609846735025190681, guid: b27a5c74e065e4d43bf1c27ed99c24b2, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2609846735025190681, guid: b27a5c74e065e4d43bf1c27ed99c24b2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

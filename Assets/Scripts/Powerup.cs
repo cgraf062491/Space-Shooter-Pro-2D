@@ -44,6 +44,9 @@ public class Powerup : MonoBehaviour
                         player.HealthRefill();
                         break;
                     case 5:
+                        player.AmmoDown();
+                        break;
+                    case 6:
                         player.CrossShotActivate();
                         break;
     			}

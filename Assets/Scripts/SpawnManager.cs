@@ -43,7 +43,7 @@ public class SpawnManager : MonoBehaviour
         {
             float x_pos = Random.Range(-9.5f, 9.5f);
             float spawnTime = Random.Range(3.0f, 7.0f);
-            int spawnType = Random.Range(0, 5);
+            int spawnType = Random.Range(0, 6);
 
             Instantiate(powerups[spawnType], new Vector3(x_pos, 7.0f, 0), Quaternion.identity);
 
@@ -51,7 +51,7 @@ public class SpawnManager : MonoBehaviour
             if(crossSpawn == 10)
             {
                 x_pos = Random.Range(-9.5f, 9.5f);
-                Instantiate(powerups[5], new Vector3(x_pos, 7.0f, 0), Quaternion.identity);
+                Instantiate(powerups[6], new Vector3(x_pos, 7.0f, 0), Quaternion.identity);
             }
             yield return new WaitForSeconds(spawnTime);
         }

@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
 	[SerializeField] private GameObject[] _playerEngines;
 	[SerializeField] private AudioClip _laser_clip;
 	[SerializeField] private AudioClip _powerup_clip;
+	[SerializeField] private AudioClip _negative_clip;
 
 	private bool _tripleShot = false;
 	private bool _shieldActive = false;
@@ -268,6 +269,18 @@ public class Player : MonoBehaviour
 	public void AmmoRefill()
 	{
 		_ammoCount = 15;
+		_audio.PlayOneShot(_powerup_clip);
+		_uiManager.UpdateAmmo(_ammoCount);
+	}
+
+	public void AmmoDown()
+	{
+		_ammoCount -= 5;
+		if(_ammoCount < 0)
+		{
+			_ammoCount = 0;
+		}
+		_audio.PlayOneShot(_negative_clip);
 		_uiManager.UpdateAmmo(_ammoCount);
 	}
 
@@ -289,6 +302,7 @@ public class Player : MonoBehaviour
 			_playerEngines[0].SetActive(false);
 			_uiManager.UpdateLives(_lives);
 		}
+		_audio.PlayOneShot(_powerup_clip);
 	}
 
 	public void EnemyDestroyed()
