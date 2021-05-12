@@ -21,10 +21,7 @@ public class Player : MonoBehaviour
 
 	private bool _tripleShot = false;
 	private bool _shieldActive = false;
-	private bool _speedActive = false;
 
-	private int _shieldLevel = 0;
-	private int _ammoCount = 15;
 	private float _canFire = -1f;
 	private SpawnManager _spawnManager;
 	private UIManager _uiManager;
@@ -73,15 +70,6 @@ public class Player : MonoBehaviour
 		{
 			Laser();
 		}
-
-		if(Input.GetKey(KeyCode.LeftShift) && _speedActive == false)
-		{
-			_speed = 7.0f;
-		}
-		else if(Input.GetKeyUp(KeyCode.LeftShift) && _speedActive == false)
-		{
-			_speed = 5.0f;
-		}
 	}
 
 	void Movement()
@@ -114,47 +102,27 @@ public class Player : MonoBehaviour
 
 	void Laser()
 	{
-		if(_ammoCount > 0)
-		{
-			_canFire = Time.time + _fireRate;
+		_canFire = Time.time + _fireRate;
 		
-			if(_tripleShot == true)
-			{
-				Instantiate(_tripleLaser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
-			}
-			else
-			{
-				Instantiate(_laser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
-			}
-
-			//player audio clip	
-			_audio.PlayOneShot(_laser_clip);
-
-			_ammoCount -= 1;
-			_uiManager.UpdateAmmo(_ammoCount);
+		if(_tripleShot == true)
+		{
+			Instantiate(_tripleLaser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
 		}
+		else
+		{
+			Instantiate(_laser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
+		}
+
+		//player audio clip	
+		_audio.PlayOneShot(_laser_clip);		
 	}
 
 	public void Damage()
 	{
 		if(_shieldActive == true)
 		{
-			_shieldLevel -= 1;
-
-			switch(_shieldLevel)
-			{
-				case 2:
-					_playerShield.GetComponent<Renderer>().material.color = Color.yellow;
-					break;
-				case 1:
-					_playerShield.GetComponent<Renderer>().material.color = Color.red;
-					break;
-				case 0:
-					_shieldActive = false;
-					_playerShield.SetActive(false);
-					break;
-			}
-			
+			_shieldActive = false;
+			_playerShield.SetActive(false);
 			return;
 		}
 
@@ -194,7 +162,6 @@ public class Player : MonoBehaviour
 	public void SpeedActivate()
 	{
 		_speed = 8.5f;
-		_speedActive = true;
 		_audio.PlayOneShot(_powerup_clip);
 		StartCoroutine(SpeedDeactivate());
 	}
@@ -202,46 +169,19 @@ public class Player : MonoBehaviour
 	IEnumerator SpeedDeactivate()
 	{
 		yield return new WaitForSeconds(5.0f);
-		_speedActive = false;
 		_speed = 5.0f;
 	}
 
 	public void ShieldActivate()
 	{
-		_shieldLevel = 3;
 		_shieldActive = true;
 		_audio.PlayOneShot(_powerup_clip);
 		_playerShield.SetActive(true);
-		_playerShield.GetComponent<Renderer>().material.color = Color.white;
 	}
 
 	public void EnemyDestroyed()
 	{
 		_score += 10;
 		_uiManager.UpdateScore(_score);
-	}
-
-	public void AmmoRefill()
-	{
-		_ammoCount = 15;
-		_audio.PlayOneShot(_powerup_clip);
-		_uiManager.UpdateAmmo(_ammoCount);
-	}
-
-	public void HealthUp()
-	{
-		_audio.PlayOneShot(_powerup_clip);
-		if(_lives == 1)
-		{
-			_lives += 1;
-			_playerEngines[1].SetActive(false);
-			_uiManager.UpdateLives(_lives);
-		}
-		else if(_lives == 2)
-		{
-			_lives += 1;
-			_playerEngines[0].SetActive(false);
-			_uiManager.UpdateLives(_lives);
-		}
 	}
 }
