@@ -5,9 +5,16 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 	[SerializeField] private float _speed = 4.0f;
+    [SerializeField] private int _enemyType;
     [SerializeField] private AudioClip _explosion_clip;
     [SerializeField] private AudioClip _enemyLaser_clip;
     [SerializeField] private GameObject _enemyLaser;
+    [SerializeField] private GameObject _twinLaser;
+
+    //For curved movement
+    [SerializeField] private float _amplitude;
+    [SerializeField] private float _frequency;
+    private Vector3 _pos;
 
     private Player player;
     private Animator anim;
@@ -23,6 +30,7 @@ public class Enemy : MonoBehaviour
         anim = GetComponent<Animator>();
         audio = GetComponent<AudioSource>();
         _origX = transform.position.x;
+        _pos = transform.position;
 
         if(player == null)
         {
@@ -45,15 +53,25 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
-
-        if(transform.position.x <= _origX - 5.0f)
+        if(_enemyType == 2)
         {
-        	transform.Translate(Vector3.right * _speed * Time.deltaTime);
+            //Move with curve
+            transform.Translate(new Vector3(Mathf.Sin(Time.time * _frequency) * _amplitude, -1f, 0) * _speed * Time.deltaTime);
+            //_pos += Vector3.down * Time.deltaTime * _speed;
+            //transform.position = _pos + Vector3.right * Mathf.Sin(Time.time * _frequency) * _amplitude;
         }
-        else if(transform.position.x >= _origX + 5.0f)
+        else
         {
-        	transform.Translate(Vector3.left * _speed * Time.deltaTime);
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
+            if(transform.position.x <= _origX - 5.0f)
+            {
+            	transform.Translate(Vector3.right * _speed * Time.deltaTime);
+            }
+            else if(transform.position.x >= _origX + 5.0f)
+            {
+            	transform.Translate(Vector3.left * _speed * Time.deltaTime);
+            }
         }
 
         if(transform.position.y < -5.5f)
@@ -103,9 +121,16 @@ public class Enemy : MonoBehaviour
     {
     	while(_canShoot == true)
     	{
-    		float laser_delay = Random.Range(3.0f, 5.0f);
-    		yield return new WaitForSeconds(laser_delay);
-    		Instantiate(_enemyLaser, transform.position + new Vector3(0, -1.0f, 0), Quaternion.identity);
+            float laser_delay = Random.Range(3.0f, 5.0f);
+            yield return new WaitForSeconds(laser_delay);
+            if(_enemyType == 1)
+            {
+                Instantiate(_twinLaser, transform.position + new Vector3(0, -1.0f, 0), Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(_enemyLaser, transform.position + new Vector3(0, -1.0f, 0), Quaternion.identity);
+            }
     		audio.PlayOneShot(_enemyLaser_clip);
     	}
     }
