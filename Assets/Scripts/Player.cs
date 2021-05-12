@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
 	private bool _shieldActive = false;
 	private bool _speedActive = false;
 
+	private int _shieldLevel = 3;
 	private float _canFire = -1f;
 	private SpawnManager _spawnManager;
 	private UIManager _uiManager;
@@ -134,8 +135,20 @@ public class Player : MonoBehaviour
 	{
 		if(_shieldActive == true)
 		{
-			_shieldActive = false;
-			_playerShield.SetActive(false);
+			_shieldLevel -= 1;
+			switch(_shieldLevel)
+			{
+				case 2:
+					_playerShield.GetComponent<Renderer>().material.color = Color.yellow;
+					break;
+				case 1:
+					_playerShield.GetComponent<Renderer>().material.color = Color.red;
+					break;
+				case 0:
+					_shieldActive = false;
+					_playerShield.SetActive(false);
+					break;
+			}
 			return;
 		}
 
@@ -190,6 +203,8 @@ public class Player : MonoBehaviour
 	public void ShieldActivate()
 	{
 		_shieldActive = true;
+		_shieldLevel = 3;
+		_playerShield.GetComponent<Renderer>().material.color = Color.white;
 		_audio.PlayOneShot(_powerup_clip);
 		_playerShield.SetActive(true);
 	}
