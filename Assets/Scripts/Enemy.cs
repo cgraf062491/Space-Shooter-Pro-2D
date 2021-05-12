@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     private AudioSource audio;
 
     private bool _canShoot = true;
+    private float _origX;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,7 @@ public class Enemy : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<Player>();
         anim = GetComponent<Animator>();
         audio = GetComponent<AudioSource>();
+        _origX = transform.position.x;
 
         if(player == null)
         {
@@ -44,6 +46,15 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
+        if(transform.position.x <= _origX - 5.0f)
+        {
+        	transform.Translate(Vector3.right * _speed * Time.deltaTime);
+        }
+        else if(transform.position.x >= _origX + 5.0f)
+        {
+        	transform.Translate(Vector3.left * _speed * Time.deltaTime);
+        }
 
         if(transform.position.y < -5.5f)
         {
