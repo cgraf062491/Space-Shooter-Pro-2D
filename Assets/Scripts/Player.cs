@@ -216,6 +216,12 @@ public class Player : MonoBehaviour
 		_playerShield.SetActive(true);
 	}
 
+	public void AmmoRefill()
+	{
+		_ammoCount = 15;
+		_uiManager.UpdateAmmo(_ammoCount);
+	}
+
 	public void EnemyDestroyed()
 	{
 		_score += 10;
