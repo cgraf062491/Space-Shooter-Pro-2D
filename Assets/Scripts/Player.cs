@@ -15,12 +15,14 @@ public class Player : MonoBehaviour
 	[SerializeField] private GameObject _laser;
 	[SerializeField] private GameObject _tripleLaser;
 	[SerializeField] private GameObject _playerShield;
+	[SerializeField] private GameObject _playerThrusters;
 	[SerializeField] private GameObject[] _playerEngines;
 	[SerializeField] private AudioClip _laser_clip;
 	[SerializeField] private AudioClip _powerup_clip;
 
 	private bool _tripleShot = false;
 	private bool _shieldActive = false;
+	private bool _speedActive = false;
 
 	private float _canFire = -1f;
 	private SpawnManager _spawnManager;
@@ -65,6 +67,17 @@ public class Player : MonoBehaviour
 	{
 		// Run all movement code
 		Movement();
+
+		if(Input.GetKey(KeyCode.LeftShift) && _speedActive == false)
+		{
+			_speed = 7.0f;
+			_playerThrusters.SetActive(true);
+		}
+		else if(Input.GetKeyUp(KeyCode.LeftShift) && _speedActive == false)
+		{
+			_speed = 5.0f;
+			_playerThrusters.SetActive(false);
+		}
 
 		if(Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
 		{
@@ -162,6 +175,7 @@ public class Player : MonoBehaviour
 	public void SpeedActivate()
 	{
 		_speed = 8.5f;
+		_speedActive = true;
 		_audio.PlayOneShot(_powerup_clip);
 		StartCoroutine(SpeedDeactivate());
 	}
@@ -169,6 +183,7 @@ public class Player : MonoBehaviour
 	IEnumerator SpeedDeactivate()
 	{
 		yield return new WaitForSeconds(5.0f);
+		_speedActive = false;
 		_speed = 5.0f;
 	}
 
