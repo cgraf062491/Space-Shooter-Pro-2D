@@ -1364,6 +1364,7 @@ GameObject:
   - component: {fileID: 993445301}
   - component: {fileID: 993445300}
   - component: {fileID: 993445302}
+  - component: {fileID: 993445304}
   - component: {fileID: 993445299}
   - component: {fileID: 993445303}
   m_Layer: 0
@@ -1591,6 +1592,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!58 &993445304
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 993445298}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 4.974043}
+  serializedVersion: 2
+  m_Radius: 4.7940426
 --- !u!1 &1606372223
 GameObject:
   m_ObjectHideFlags: 0

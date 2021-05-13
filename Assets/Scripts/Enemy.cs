@@ -23,7 +23,9 @@ public class Enemy : MonoBehaviour
 
     private bool _canShoot = true;
     private bool _shieldActive = false;
+    private bool _playerInRange = false;
     private float _origX;
+    private Vector3 _playerPos;
 
     // Start is called before the first frame update
     void Start()
@@ -62,24 +64,33 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(_enemyType == 2)
+        if(_playerInRange == false)
         {
-            //Move with curve
-            transform.Translate(new Vector3(Mathf.Sin(Time.time * _frequency) * _amplitude, -1f, 0) * _speed * Time.deltaTime);
+            if(_enemyType == 2)
+            {
+                //Move with curve
+                transform.Translate(new Vector3(Mathf.Sin(Time.time * _frequency) * _amplitude, -1f, 0) * _speed * Time.deltaTime);
+            }
+            else
+            {
+                transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
+                if(transform.position.x <= _origX - 5.0f)
+                {
+                    transform.Translate(Vector3.right * _speed * Time.deltaTime);
+                }
+                else if(transform.position.x >= _origX + 5.0f)
+                {
+                    transform.Translate(Vector3.left * _speed * Time.deltaTime);
+                }
+            }
         }
         else
         {
-            transform.Translate(Vector3.down * _speed * Time.deltaTime);
-
-            if(transform.position.x <= _origX - 5.0f)
-            {
-            	transform.Translate(Vector3.right * _speed * Time.deltaTime);
-            }
-            else if(transform.position.x >= _origX + 5.0f)
-            {
-            	transform.Translate(Vector3.left * _speed * Time.deltaTime);
-            }
+            //transform.Translate(new Vector3(_playerX, -1, 0) * _speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, _playerPos, _speed * Time.deltaTime);
         }
+        
 
         if(transform.position.y < -5.5f)
         {
@@ -92,6 +103,13 @@ public class Enemy : MonoBehaviour
     {
     	if(other.CompareTag("Player"))
     	{
+            if(other is CircleCollider2D)
+            {
+                _playerInRange = true;
+                _playerPos = other.transform.position;
+               // Debug.Log("Player X is " + _playerPos);
+                return;
+            }
 
             if(player != null)
             {
@@ -136,6 +154,14 @@ public class Enemy : MonoBehaviour
             Destroy(GetComponent<Collider2D>());
     		//Destroy(this.gameObject);
     	}
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if(other is CircleCollider2D)
+        {
+            _playerInRange = false;
+        }
     }
 
     IEnumerator ShootLaser()

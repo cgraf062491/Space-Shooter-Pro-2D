@@ -19,39 +19,42 @@ public class Powerup : MonoBehaviour
     
     void OnTriggerEnter2D(Collider2D other)
     {
-    	if(other.CompareTag("Player"))
-    	{
-    		Player player = other.transform.GetComponent<Player>();
-    		if(player != null)
-    		{
-    			switch(_powerupID)
-    			{
-    				case 0:
-    					player.TripleShotActivate();
-    					break;
+        if(other is BoxCollider2D)
+        {
+            if(other.CompareTag("Player"))
+            {
+                Player player = other.transform.GetComponent<Player>();
+                if(player != null)
+                {
+                    switch(_powerupID)
+                    {
+                        case 0:
+                            player.TripleShotActivate();
+                            break;
 
-    				case 1:
-    					player.SpeedActivate();
-    					break;
+                        case 1:
+                            player.SpeedActivate();
+                            break;
 
-    				case 2:
-    					player.ShieldActivate();
-    					break;
-                    case 3:
-                        player.AmmoRefill();
-                        break;
-                    case 4:
-                        player.HealthRefill();
-                        break;
-                    case 5:
-                        player.AmmoDown();
-                        break;
-                    case 6:
-                        player.CrossShotActivate();
-                        break;
-    			}
-    		}
-    		Destroy(this.gameObject);
-    	}
+                        case 2:
+                            player.ShieldActivate();
+                            break;
+                        case 3:
+                            player.AmmoRefill();
+                            break;
+                        case 4:
+                            player.HealthRefill();
+                            break;
+                        case 5:
+                            player.AmmoDown();
+                            break;
+                        case 6:
+                            player.CrossShotActivate();
+                            break;
+                    }
+                }
+                Destroy(this.gameObject);
+            }
+        }
     }
 }

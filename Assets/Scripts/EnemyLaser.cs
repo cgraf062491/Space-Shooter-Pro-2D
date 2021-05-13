@@ -28,16 +28,19 @@ public class EnemyLaser : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-    	if(other.CompareTag("Player"))
-    	{
-    		Player player = other.transform.GetComponent<Player>();
+        if(other is BoxCollider2D)
+        {
+            if(other.CompareTag("Player"))
+            {
+                Player player = other.transform.GetComponent<Player>();
 
-    		if(player != null)
-    		{
-    			player.Damage();
-    		}
+                if(player != null)
+                {
+                    player.Damage();
+                }
 
-    		Destroy(this.gameObject);
-    	}
+                Destroy(this.gameObject);
+            }
+        }
     }
 }
