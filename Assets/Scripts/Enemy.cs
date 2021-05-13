@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private AudioClip _explosion_clip;
     [SerializeField] private AudioClip _enemyLaser_clip;
     [SerializeField] private GameObject _enemyLaser;
+    [SerializeField] private GameObject _enemyLaserUp;
     [SerializeField] private GameObject _twinLaser;
     [SerializeField] private GameObject _enemyShield;
 
@@ -168,17 +169,29 @@ public class Enemy : MonoBehaviour
     {
     	while(_canShoot == true)
     	{
-            float laser_delay = Random.Range(3.0f, 5.0f);
-            yield return new WaitForSeconds(laser_delay);
             if(_enemyType == 1)
             {
                 Instantiate(_twinLaser, transform.position + new Vector3(0, -1.0f, 0), Quaternion.identity);
+            }
+            else if(_enemyType == 3)
+            {
+                _playerPos.y = GameObject.Find("Player").transform.position.y;
+                if(_playerPos.y > transform.position.y)
+                {
+                    Instantiate(_enemyLaserUp, transform.position + new Vector3(0, +1.0f, 0), Quaternion.identity);
+                }
+                else
+                {
+                    Instantiate(_enemyLaser, transform.position + new Vector3(0, -1.0f, 0), Quaternion.identity);
+                }
             }
             else
             {
                 Instantiate(_enemyLaser, transform.position + new Vector3(0, -1.0f, 0), Quaternion.identity);
             }
     		audio.PlayOneShot(_enemyLaser_clip);
+            float laser_delay = Random.Range(3.0f, 5.0f);
+            yield return new WaitForSeconds(laser_delay);
     	}
     }
 

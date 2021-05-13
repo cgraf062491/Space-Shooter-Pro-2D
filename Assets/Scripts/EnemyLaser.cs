@@ -16,7 +16,7 @@ public class EnemyLaser : MonoBehaviour
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        if(transform.position.y < -6)
+        if(transform.position.y > 7 || transform.position.y < -7 || transform.position.x > 10 || transform.position.x < -10)
         {
             if(transform.parent != null)
             {

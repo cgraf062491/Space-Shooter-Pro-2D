@@ -234,6 +234,7 @@ MonoBehaviour:
   _explosion_clip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _enemyLaser_clip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _enemyLaser: {fileID: 6433974170623064128, guid: 2662e91d5cc71448e9286a6774c2a176, type: 3}
+  _enemyLaserUp: {fileID: 8520241400839486016, guid: add6b64a80ed541ae817300fb5e74f95, type: 3}
   _twinLaser: {fileID: 684628283607557553, guid: 9b450414cd037416b975dc5ce1e8f8d2, type: 3}
   _enemyShield: {fileID: 10996429}
   _amplitude: 1
