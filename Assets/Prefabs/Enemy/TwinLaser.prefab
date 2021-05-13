@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 5482532978992731894}
   m_Layer: 0
   m_Name: EnemyLaser
-  m_TagString: Enemy
+  m_TagString: EnemyLaser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 8351119926463175174}
   m_Layer: 0
   m_Name: EnemyLaser (1)
-  m_TagString: Enemy
+  m_TagString: EnemyLaser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
