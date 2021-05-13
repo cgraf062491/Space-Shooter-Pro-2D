@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private AudioClip _enemyLaser_clip;
     [SerializeField] private GameObject _enemyLaser;
     [SerializeField] private GameObject _twinLaser;
+    [SerializeField] private GameObject _enemyShield;
 
     //For curved movement
     [SerializeField] private float _amplitude;
@@ -21,6 +22,7 @@ public class Enemy : MonoBehaviour
     private AudioSource audio;
 
     private bool _canShoot = true;
+    private bool _shieldActive = false;
     private float _origX;
 
     // Start is called before the first frame update
@@ -45,6 +47,13 @@ public class Enemy : MonoBehaviour
         if(audio == null)
         {
             Debug.LogError("AudioSource on Enemy was NULL");
+        }
+
+        int randomShield = Random.Range(1,6);
+        if(randomShield == 5)
+        {
+            _enemyShield.SetActive(true);
+            _shieldActive = true;
         }
 
         StartCoroutine(ShootLaser());
@@ -83,13 +92,19 @@ public class Enemy : MonoBehaviour
     {
     	if(other.CompareTag("Player"))
     	{
-    		//Damage player
-    		//Player player = other.transform.GetComponent<Player>();
 
-    		if(player != null)
-    		{
-    			player.Damage();
-    		}
+            if(player != null)
+            {
+                player.Damage();
+            }
+
+
+    		if(_shieldActive == true)
+            {
+                _shieldActive = false;
+                _enemyShield.SetActive(false);
+                return;
+            }
 
     		_speed = 0f;
             _canShoot = false;
@@ -101,6 +116,14 @@ public class Enemy : MonoBehaviour
     	else if(other.CompareTag("Laser"))
     	{
     		Destroy(other.gameObject);
+
+            if(_shieldActive == true)
+            {
+                _shieldActive = false;
+                _enemyShield.SetActive(false);
+                return;
+            }
+
             if(player != null)
             {
                 player.EnemyDestroyed();
