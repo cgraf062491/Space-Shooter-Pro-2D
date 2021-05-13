@@ -57,8 +57,6 @@ public class Enemy : MonoBehaviour
         {
             //Move with curve
             transform.Translate(new Vector3(Mathf.Sin(Time.time * _frequency) * _amplitude, -1f, 0) * _speed * Time.deltaTime);
-            //_pos += Vector3.down * Time.deltaTime * _speed;
-            //transform.position = _pos + Vector3.right * Mathf.Sin(Time.time * _frequency) * _amplitude;
         }
         else
         {
