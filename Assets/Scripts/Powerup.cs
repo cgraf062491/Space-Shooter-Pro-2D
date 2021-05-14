@@ -63,6 +63,9 @@ public class Powerup : MonoBehaviour
                         case 6:
                             player.CrossShotActivate();
                             break;
+                        case 7:
+                            player.SeekingShotActivate();
+                            break;
                     }
                 }
                 Destroy(this.gameObject);

@@ -71,29 +71,33 @@ public class SpawnManager : MonoBehaviour
             {
                 spawnType = 3;
             }
-            else if(randomType > 0.25f && randomType <= 0.45f)
+            else if(randomType > 0.25f && randomType <= 0.44f)
             {
                 spawnType = 0;
             }
-            else if(randomType > 0.45f && randomType <= 0.65f)
+            else if(randomType > 0.44f && randomType <= 0.62f)
             {
                 spawnType = 1;
             }
-            else if(randomType > 0.65f && randomType <= 0.85f)
+            else if(randomType > 0.62f && randomType <= 0.8f)
             {
                 spawnType = 2;
             }
-            else if(randomType > 0.85f && randomType <= 0.9f)
+            else if(randomType > 0.80f && randomType <= 0.85f)
             {
                 spawnType = 4;
             }
-            else if(randomType > 0.9f && randomType <= 0.95f)
+            else if(randomType > 0.85f && randomType <= 0.9f)
             {
                 spawnType = 5;
             }
-            else if(randomType > 0.95f && randomType <= 1.0f)
+            else if(randomType > 0.9f && randomType <= 0.95f)
             {
                 spawnType = 6;
+            }
+            else
+            {
+                spawnType = 7;
             }
             Instantiate(powerups[spawnType], new Vector3(x_pos, 7.0f, 0), Quaternion.identity);
             yield return new WaitForSeconds(spawnTime);

@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 	[SerializeField] private float _fireRate = 0.15f;
 	[SerializeField] private GameObject _laser;
 	[SerializeField] private GameObject _tripleLaser;
+	[SerializeField] private GameObject _seekingLaser;
 	[SerializeField] private GameObject _crossLaser;
 	[SerializeField] private GameObject _playerShield;
 	[SerializeField] private GameObject _playerThrusters;
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour
 	[SerializeField] private AudioClip _negative_clip;
 
 	private bool _tripleShot = false;
+	[SerializeField] private bool _seekingShot = false;
 	private bool _shieldActive = false;
 	private bool _speedActive = false;
 	private bool _canThruster = true;
@@ -153,6 +155,10 @@ public class Player : MonoBehaviour
 			{
 				Instantiate(_crossLaser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
 			}
+			else if(_seekingShot == true)
+			{
+				Instantiate(_seekingLaser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
+			}
 			else
 			{
 				Instantiate(_laser, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
@@ -229,6 +235,19 @@ public class Player : MonoBehaviour
 	{
 		yield return new WaitForSeconds(5.0f);
 		_crossShot = false;
+	}
+
+	public void SeekingShotActivate()
+	{
+		_seekingShot = true;
+		_audio.PlayOneShot(_powerup_clip);
+		StartCoroutine(SeekingShotDeactivate());
+	}
+
+	IEnumerator SeekingShotDeactivate()
+	{
+		yield return new WaitForSeconds(5.0f);
+		_seekingShot = false;
 	}
 
 	public void SpeedActivate()
