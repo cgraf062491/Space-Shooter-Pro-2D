@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
     private AudioSource audio;
 
     private bool _canShoot = true;
+    private bool _avoidTime = false;
     private bool _shieldActive = false;
     private bool _playerInRange = false;
     private float _origX;
@@ -75,6 +76,11 @@ public class Enemy : MonoBehaviour
             else
             {
                 transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
+                if(_enemyType == 4 && _avoidTime == true)
+                {
+                	transform.Translate(new Vector3(-1, -1, 0) * _speed * Time.deltaTime);
+                }
 
                 if(transform.position.x <= _origX - 5.0f)
                 {
@@ -134,26 +140,33 @@ public class Enemy : MonoBehaviour
     	}
     	else if(other.CompareTag("Laser"))
     	{
-    		Destroy(other.gameObject);
+    		if(other is CapsuleCollider2D && _enemyType == 4)
+    		{
+    			_avoidTime = true;
+    		}
+    		else
+    		{
+    			Destroy(other.gameObject);
 
-            if(_shieldActive == true)
-            {
-                _shieldActive = false;
-                _enemyShield.SetActive(false);
-                return;
-            }
+	            if(_shieldActive == true)
+	            {
+	                _shieldActive = false;
+	                _enemyShield.SetActive(false);
+	                return;
+	            }
 
-            if(player != null)
-            {
-                player.EnemyDestroyed();
-            }
-            
-            _speed = 0f;
-            _canShoot = false;
-            anim.SetTrigger("OnEnemyDeath");
-            audio.PlayOneShot(_explosion_clip);
-            Destroy(GetComponent<Collider2D>());
-    		//Destroy(this.gameObject);
+	            if(player != null)
+	            {
+	                player.EnemyDestroyed();
+	            }
+	            
+	            _speed = 0f;
+	            _canShoot = false;
+	            anim.SetTrigger("OnEnemyDeath");
+	            audio.PlayOneShot(_explosion_clip);
+	            Destroy(GetComponent<Collider2D>());
+	    		//Destroy(this.gameObject);
+    		}
     	}
     }
 
@@ -162,6 +175,11 @@ public class Enemy : MonoBehaviour
         if(other is CircleCollider2D)
         {
             _playerInRange = false;
+        }
+
+        if(other is CapsuleCollider2D && _enemyType == 4)
+        {
+        	_avoidTime = false;
         }
     }
 

@@ -30,10 +30,13 @@ public class Asteroid : MonoBehaviour
     {
     	if(other.CompareTag("Laser"))
     	{
-    		Instantiate(_explosion, transform.position, Quaternion.identity);
-    		Destroy(other.gameObject);
-            _spawnManager.StartSpawning();
-    		Destroy(this.gameObject, 0.2f);
+            if(other is BoxCollider2D)
+            {
+                Instantiate(_explosion, transform.position, Quaternion.identity);
+                Destroy(other.gameObject);
+                _spawnManager.StartSpawning();
+                Destroy(this.gameObject, 0.2f);
+            }
     	}
     }
 }

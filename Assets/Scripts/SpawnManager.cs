@@ -29,15 +29,19 @@ public class SpawnManager : MonoBehaviour
             {
                 float x_pos = Random.Range(-9.5f, 9.5f);
                 float randomType = Random.Range(0.0f, 1.0f);
-                if(randomType >= 0.0f && randomType <= 0.35f)
+                if(randomType >= 0.0f && randomType <= 0.25f)
                 {
                     enemyType = 0;
                 }
-                else if(randomType > 0.35 && randomType <= 0.6)
+                else if(randomType > 0.25 && randomType <= 0.45)
+                {
+                    enemyType = 4;
+                }
+                else if(randomType > 0.45 && randomType <= 0.65)
                 {
                     enemyType = 3;
                 }
-                else if(randomType > 0.6f && randomType <= 0.9f)
+                else if(randomType > 0.65f && randomType <= 0.9f)
                 {
                     enemyType = 2;
                 }

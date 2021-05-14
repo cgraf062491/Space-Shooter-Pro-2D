@@ -632,7 +632,7 @@ AudioSource:
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
-  BypassEffects: 0
+  BypassEffects: 1
   BypassListenerEffects: 0
   BypassReverbZones: 0
   rolloffCustomCurve:
@@ -2301,7 +2301,8 @@ MonoBehaviour:
   - {fileID: 8473125227277403641, guid: 9afa718fa0efe432596363165ce7478c, type: 3}
   - {fileID: 371252207135925047, guid: 6b75d1b4de10c43b9bb2b2a6fb4c30a9, type: 3}
   - {fileID: 9084343792717698538, guid: 3128510bfcf0841ae909918a231c9583, type: 3}
-  - {fileID: 4149310651935307180, guid: 17c28e39cd1744333bf325aa1f306029, type: 3}
+  - {fileID: 4149310651935307180, guid: a053502a393684a25830977ce031c9d9, type: 3}
+  - {fileID: 2249300015816690132, guid: 7f41ad57899154b6aa051704df25a355, type: 3}
   powerups:
   - {fileID: 4474116356796242881, guid: 2b5a06f09430048fca2da6eb51fa837b, type: 3}
   - {fileID: 8598813435854584407, guid: 6f8c11ca6f6714066b5cffc92e13bc40, type: 3}
