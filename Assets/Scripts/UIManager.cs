@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 {
 	[SerializeField] private Text _scoreText;
 	[SerializeField] private Text _gameOverText;
+    [SerializeField] private Text _gameWinText;
 	[SerializeField] private Text _restartText;
     [SerializeField] private Text _ammoText;
 	[SerializeField] private Sprite[] _livesSprites;
@@ -83,6 +84,12 @@ public class UIManager : MonoBehaviour
             _ammoText.text = "Ammo: " + currentAmmo + "/15";
             _ammoText.color = Color.white;
         }
+    }
+
+    public void GameWin()
+    {
+        _gameWinText.enabled = true;
+        _restartText.enabled = true;
     }
 
     IEnumerator GameOverFlicker()

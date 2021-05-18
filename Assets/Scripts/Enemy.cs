@@ -144,7 +144,7 @@ public class Enemy : MonoBehaviour
     		{
     			_avoidTime = true;
     		}
-    		else
+    		else if(other is BoxCollider2D)
     		{
     			Destroy(other.gameObject);
 

@@ -55,8 +55,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\SeekingBlast.cs" />
+     <Compile Include="Assets\Scripts\EnemyBoss.cs" />
      <Compile Include="Assets\Scripts\Asteroid.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\Scripts\EnemyBossSeeker.cs" />
      <Compile Include="Assets\Scripts\Explosion.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\Laser.cs" />
@@ -69,6 +72,7 @@
      <Compile Include="Assets\Scripts\SpawnManager.cs" />
      <None Include="Assets\GameDevHQ\FileBase\Projects\Tutorials\Starter_Files\2D_Galaxy_Assets\Materials\Shaders\Galaxy.shader" />
      <None Include="Assets\GameDevHQ\FileBase\Plugin\README.txt" />
+     <None Include="Assets\Sprites\AlienStarship-by-MillionthVector\Credits.txt" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>/Users/christophergraf/Desktop/MyWork/GameDev/Other/GameDevHQ/Space Shooter Pro 2D/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

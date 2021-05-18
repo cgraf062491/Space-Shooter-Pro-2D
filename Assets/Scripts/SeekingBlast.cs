@@ -10,7 +10,7 @@ public class SeekingBlast : MonoBehaviour
 	private Vector3 pos;
 
 	private bool _foundEnemy = false;
-	private float _speed = 6.0f;
+	[SerializeField] private float _speed = 6.0f;
 
     // Start is called before the first frame update
     void Start()

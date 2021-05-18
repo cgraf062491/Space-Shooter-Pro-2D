@@ -8,8 +8,11 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject[] powerups;
 	[SerializeField] private GameObject _enemyContainer;
 
-	private bool _stopSpawning;
-    private int _waveNum = 1;
+	private bool _stopSpawningEnemies;
+    private bool _stopSpawningPowerups;
+    private bool _bossSpawned;
+    private int _waveNum = 2;
+    private float _waveWait = 5.0f;
     
 
     public void StartSpawning()
@@ -21,47 +24,58 @@ public class SpawnManager : MonoBehaviour
     IEnumerator SpawnEnemy()
     {
     	yield return new WaitForSeconds(3.0f);
-    	while(_stopSpawning == false)
+    	while(_stopSpawningEnemies == false)
     	{
             _waveNum += 1;
             int enemyType;
-            for(int i = 0; i < _waveNum; i++)
+            if(_waveNum <= 8)
             {
-                float x_pos = Random.Range(-9.5f, 9.5f);
-                float randomType = Random.Range(0.0f, 1.0f);
-                if(randomType >= 0.0f && randomType <= 0.25f)
+                for(int i = 0; i < _waveNum; i++)
                 {
-                    enemyType = 0;
+                    float x_pos = Random.Range(-9.5f, 9.5f);
+                    float randomType = Random.Range(0.0f, 1.0f);
+                    if(randomType >= 0.0f && randomType <= 0.25f)
+                    {
+                        enemyType = 0;
+                    }
+                    else if(randomType > 0.25 && randomType <= 0.45)
+                    {
+                        enemyType = 4;
+                    }
+                    else if(randomType > 0.45 && randomType <= 0.65)
+                    {
+                        enemyType = 3;
+                    }
+                    else if(randomType > 0.65f && randomType <= 0.9f)
+                    {
+                        enemyType = 2;
+                    }
+                    else
+                    {
+                        enemyType = 1;
+                    }
+                    GameObject newEnemy = Instantiate(_enemies[enemyType], new Vector3(x_pos, 7.0f, 0), Quaternion.identity);
+                    newEnemy.transform.parent = _enemyContainer.transform;
+                    yield return new WaitForSeconds(1.0f);
                 }
-                else if(randomType > 0.25 && randomType <= 0.45)
-                {
-                    enemyType = 4;
-                }
-                else if(randomType > 0.45 && randomType <= 0.65)
-                {
-                    enemyType = 3;
-                }
-                else if(randomType > 0.65f && randomType <= 0.9f)
-                {
-                    enemyType = 2;
-                }
-                else
-                {
-                    enemyType = 1;
-                }
-                GameObject newEnemy = Instantiate(_enemies[enemyType], new Vector3(x_pos, 7.0f, 0), Quaternion.identity);
-                newEnemy.transform.parent = _enemyContainer.transform;
-                yield return new WaitForSeconds(2.0f);
+                yield return new WaitForSeconds(_waveWait);
+                _waveWait += 2.0f;
             }
-            yield return new WaitForSeconds(10.0f);
-        }
-    		
+            else
+            {
+                //yield return new WaitForSeconds(20.0f);
+                _bossSpawned = true;
+                _stopSpawningEnemies = true;
+                GameObject bossEnemy = Instantiate(_enemies[5], new Vector3(0, 12.0f, 0), Quaternion.identity);
+                bossEnemy.transform.parent = _enemyContainer.transform;
+            }   
+        }	
     }
 
     IEnumerator SpawnPowerup()
     {
     	yield return new WaitForSeconds(3.0f);
-        while(_stopSpawning == false)
+        while(_stopSpawningPowerups == false)
         {
             float x_pos = Random.Range(-9.5f, 9.5f);
             float spawnTime = Random.Range(3.0f, 7.0f);
@@ -106,6 +120,7 @@ public class SpawnManager : MonoBehaviour
 
     public void OnPlayerDeath()
     {
-    	_stopSpawning = true;
+    	_stopSpawningEnemies = true;
+        _stopSpawningPowerups = true;
     }
 }
